@@ -1,5 +1,3 @@
-# PHP client for https://www.cm.com/nl-nl/
-
 [![Build Status](https://travis-ci.org/nimbles-nl/cm-telecom.svg?branch=master)](https://travis-ci.org/nimbles-nl/cm-telecom) [![Latest Stable Version](https://poser.pugx.org/nimbles-nl/cm-telecom/v/stable)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![License](https://poser.pugx.org/nimbles-nl/cm-telecom/license)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![Total Downloads](https://poser.pugx.org/nimbles-nl/cm-telecom/downloads)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![codecov](https://codecov.io/gh/nimbles-nl/cm-telecom/branch/master/graph/badge.svg)](https://codecov.io/gh/nimbles-nl/cm-telecom)
 
 
@@ -15,7 +13,7 @@ Initializing OnlineBetaalPlatform
 ---------------------------------
 
 ``` php
-$guzzle          = new Client();
+$guzzle          = new \GuzzleHttp\Client();
 $apiToken        = 'secret-token';
 $apiUrl          = 'https://idin.cmtelecom.com/idin/v1.0/test';
 $applicationName = 'MyApp';
