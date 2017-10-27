@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/nimbles-nl/cm-telecom.svg?branch=master)](https://travis-ci.org/nimbles-nl/cm-telecom) [![Latest Stable Version](https://poser.pugx.org/nimbles-nl/cm-telecom/v/stable)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![License](https://poser.pugx.org/nimbles-nl/cm-telecom/license)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![Total Downloads](https://poser.pugx.org/nimbles-nl/cm-telecom/downloads)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![codecov](https://codecov.io/gh/nimbles-nl/cm-telecom/branch/master/graph/badge.svg)](https://codecov.io/gh/nimbles-nl/cm-telecom) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nimbles-nl/cm-telecom/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nimbles-nl/cm-telecom/?branch=master)
 
-## Introduction
+Introduction
+------------
 
 IDIN is used for personal identification by bank and is supported by Dutch banks.
 With IDIN you can be sure who is registering on your application. This PHP package contains a client for [CM Telecom](https://get.cm.nl/idin/).
@@ -19,9 +20,11 @@ Install package by running the command:
 $ composer require nimbles-nl/cm-telecom
 ```
 
-Initializing IDINClient
------------------------
+## Usage
+This package is easy to use and can be used in any php project with php 7.0 or later.
 
+
+### Initializing IDINClient
 ``` php
 $guzzle          = new \GuzzleHttp\Client();
 $apiToken        = 'secret-token';
@@ -31,16 +34,12 @@ $applicationName = 'MyApp';
 $IDINClient = new IDINClient($guzzle, $apiToken, $apiUrl, $applicationName);
 ```
 
-Get a list of issuers
----------------------
-
+### Get a list of issuers
 ``` php
 $issuers = $IDINClient->getIssuers();
 ```
 
-
-Start an IDIN Transaction
--------------------------
+### Start an IDIN Transaction
 
 ``` php
 $issuers = $IDINClient->getIssuers();
@@ -57,9 +56,7 @@ $merchantReference = $IDINTransaction->getMerchantReference();
 return new RedirectResponse($IDINTransaction->getAuthenticationUrl());
 ```
 
-Recieve an array of user details with the IDIN Transaction
-----------------------------------------------------------
-
+### Recieve an array of user details with the IDIN Transaction
 ``` php
 $IDINTransaction = new IDINTransaction($transactionId, $merchantReference, $entranceCode);
 
