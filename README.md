@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/nimbles-nl/cm-telecom.svg?branch=master)](https://travis-ci.org/nimbles-nl/cm-telecom) [![Latest Stable Version](https://poser.pugx.org/nimbles-nl/cm-telecom/v/stable)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![License](https://poser.pugx.org/nimbles-nl/cm-telecom/license)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![Total Downloads](https://poser.pugx.org/nimbles-nl/cm-telecom/downloads)](https://packagist.org/packages/nimbles-nl/cm-telecom) [![codecov](https://codecov.io/gh/nimbles-nl/cm-telecom/branch/master/graph/badge.svg)](https://codecov.io/gh/nimbles-nl/cm-telecom)
 
-![IDIN logo](https://github.com/nimbles-nl/cm-telecom/blob/master/logo/IDIN_logo_512_pixels.png)
+![IDIN logo](https://github.com/nimbles-nl/cm-telecom/blob/master/logo/IDIN_logo_144_pixels.png)
 
 ## Introduction
 
