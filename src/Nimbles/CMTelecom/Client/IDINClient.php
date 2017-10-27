@@ -70,6 +70,10 @@ class IDINClient
             throw new IssuerConnectionException($responseData);
         }
 
+        if ( ! isset($responseData[0]['issuers'])) {
+            throw new IssuerConnectionException('Unable to parse issuers');
+        }
+
         return array_map(function($issuerData) {
             return new Issuer($issuerData['issuer_id'], $issuerData['issuer_name']);
         }, $responseData[0]['issuers']);
