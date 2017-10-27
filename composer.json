@@ -1,0 +1,34 @@
+{
+  "name": "nimbles-nl/cm-telecom",
+  "description": "PHP Package for CM Telecom IBAN and IDIN verification",
+  "keywords": [
+    "IDIN",
+    "IBAN",
+    "php",
+    "payment",
+    "IDEAL"
+  ],
+  "homepage": "https://github.com/nimbles-nl/cm-telecom",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Wessel Strengholt",
+      "email": "wessel@nimbles.com"
+    }
+  ],
+  "autoload-dev": {
+    "psr-4": {"Tests\\": "tests/"}
+  },
+  "require": {
+    "php": ">=7.0.0",
+    "guzzlehttp/guzzle": "~6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Nimbles\\CMTelecom": "src/"
+    }
+  }
+}
