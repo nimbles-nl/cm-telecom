@@ -129,12 +129,12 @@ class IDINClientTest extends TestCase
             ->willReturn($this->stream);
 
         $this->stream->expects($this->once())
-            ->method('getContents');
+            ->method('getContents')
+            ->willReturn('[{"foo" : "bar"}]');
 
         $this->response->expects($this->once())
             ->method('getStatusCode')
-            ->willReturn(200)
-            ->willReturn('[{"foo" : "bar"}]');
+            ->willReturn(200);
 
         $this->client->getIssuers();
     }
