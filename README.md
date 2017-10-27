@@ -9,8 +9,8 @@ Install package by running the command:
 $ composer require nimbles-nl/cm-telecom
 ```
 
-Initializing OnlineBetaalPlatform
----------------------------------
+Initializing IDINClient
+-----------------------
 
 ``` php
 $guzzle          = new \GuzzleHttp\Client();
@@ -52,5 +52,6 @@ Recieve an array of user details with the IDIN Transaction
 
 ``` php
 $IDINTransaction = new IDINTransaction($transactionId, $merchantReference, $entranceCode);
+
 $userData = $IDINClient->getUserInfo($IDINTransaction);
 ```
