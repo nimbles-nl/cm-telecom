@@ -108,6 +108,37 @@ class IBANClientTest extends TestCase
         $this->client->getIssuers();
     }
 
+    /**
+     * @expectedException \Nimbles\CMTelecom\Exception\IssuerConnectionException
+     */
+    public function testGetIssuersNoSetException()
+    {
+        $this->httpClient->expects($this->once())->method('request')
+            ->with('POST', 'https://test.cm-telecom.nl/directory', [
+                'json' => [
+                    'merchant_token' => 'secret-token',
+                ],
+                'headers' => [
+                    'user_agent' => 'MyApp',
+                ],
+            ])
+            ->willReturn($this->response);
+
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->willReturn($this->stream);
+
+        $this->stream->expects($this->once())
+            ->method('getContents')
+            ->willReturn('[{"foo" : "bar"}]');
+
+        $this->response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(200);
+
+        $this->client->getIssuers();
+    }
+
     public function testGetIDINTransaction()
     {
         $this->httpClient->expects($this->once())->method('request')
