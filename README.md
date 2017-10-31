@@ -5,8 +5,8 @@
 Introduction
 ------------
 
-IDIN is used for personal identification by bank and is supported by Dutch banks.
-With IDIN you can be sure who is registering on your application. This PHP package contains a client for [CM Telecom](https://get.cm.nl/idin/).
+iDIN is used for personal identification by bank and is supported by Dutch banks.
+With iDIN you can be sure who is registering on your application. This PHP package contains a client for [CM Telecom](https://get.cm.nl/idin/).
 
 See for more information: [https://www.idin.nl](https://www.idin.nl/)
 
@@ -39,7 +39,7 @@ $client = new IDINClient($guzzle, $apiToken, $apiUrl, $applicationName);
 $issuers = $client->getIssuers();
 ```
 
-### Start an IDIN Transaction
+### Start an iDIN Transaction
 
 ``` php
 $issuers = $client->getIssuers();
@@ -56,7 +56,7 @@ $merchantReference = $transaction->getMerchantReference();
 return new RedirectResponse($transaction->getAuthenticationUrl());
 ```
 
-### Receive an array of user details with the IDIN Transaction object
+### Receive an array of user details with the iDIN Transaction object
 ``` php
 $transaction = new IDINTransaction($transactionId, $merchantReference, $entranceCode);
 
