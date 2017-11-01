@@ -24,7 +24,7 @@ $ composer require nimbles-nl/cm-telecom
 This package is easy to use and can be used in any php project with php 7.0 or later.
 
 
-### Initializing IDIN Client
+### Initializing iDIN Client
 ``` php
 $guzzle          = new \GuzzleHttp\Client();
 $apiToken        = 'secret-token';
