@@ -8,7 +8,7 @@
 
 namespace Tests\Nimbles\CMTelecom\Client;
 
-use GuzzleHttp\ClientInterface;
+use Http\Client\HttpClient;
 use Nimbles\CMTelecom\Client\IBANClient;
 use Nimbles\CMTelecom\Model\IBANTransaction;
 use Nimbles\CMTelecom\Model\Issuer;
@@ -24,7 +24,7 @@ class IBANClientTest extends TestCase
     /** @var IBANClient */
     private $client;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ClientInterface */
+    /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClient */
     private $httpClient;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ResponseInterface */
@@ -52,16 +52,9 @@ class IBANClientTest extends TestCase
     
     public function testGetIssuers()
     {
-        $this->httpClient->expects($this->once())->method('request')
-            ->with('POST', 'https://test.cm-telecom.nl/directory', [
-                'json' => [
-                    'merchant_token' => 'secret-token',
-                ],
-                'headers' => [
-                    'User-Agent' => 'MyApp',
-                ],
-            ])
-        ->willReturn($this->response);
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn($this->response);
 
         $this->response->expects($this->once())
             ->method('getBody')
@@ -83,15 +76,8 @@ class IBANClientTest extends TestCase
      */
     public function testGetIssuersStatusCodeNot200Exception()
     {
-        $this->httpClient->expects($this->once())->method('request')
-            ->with('POST', 'https://test.cm-telecom.nl/directory', [
-                'json' => [
-                    'merchant_token' => 'secret-token',
-                ],
-                'headers' => [
-                    'User-Agent' => 'MyApp',
-                ],
-            ])
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -113,15 +99,8 @@ class IBANClientTest extends TestCase
      */
     public function testGetIssuersNoSetException()
     {
-        $this->httpClient->expects($this->once())->method('request')
-            ->with('POST', 'https://test.cm-telecom.nl/directory', [
-                'json' => [
-                    'merchant_token' => 'secret-token',
-                ],
-                'headers' => [
-                    'User-Agent' => 'MyApp',
-                ],
-            ])
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -141,7 +120,8 @@ class IBANClientTest extends TestCase
 
     public function testGetIDINTransaction()
     {
-        $this->httpClient->expects($this->once())->method('request')
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -170,7 +150,8 @@ class IBANClientTest extends TestCase
      */
     public function testGetIBANTransactionException()
     {
-        $this->httpClient->expects($this->once())->method('request')
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -202,17 +183,8 @@ class IBANClientTest extends TestCase
             ->method('getMerchantReference')
             ->willReturn('transaction-reference');
 
-        $this->httpClient->expects($this->once())->method('request')
-            ->with('POST', 'https://test.cm-telecom.nl/status', [
-                'json' => [
-                    'merchant_token'     => 'secret-token',
-                    'transaction_id'     => 'transaction-id',
-                    'merchant_reference' => 'transaction-reference',
-                ],
-                'headers' => [
-                    'User-Agent' => 'MyApp',
-                ],
-            ])
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -243,17 +215,8 @@ class IBANClientTest extends TestCase
             ->method('getMerchantReference')
             ->willReturn('transaction-reference');
 
-        $this->httpClient->expects($this->once())->method('request')
-            ->with('POST', 'https://test.cm-telecom.nl/status', [
-                'json' => [
-                    'merchant_token'     => 'secret-token',
-                    'transaction_id'     => 'transaction-id',
-                    'merchant_reference' => 'transaction-reference',
-                ],
-                'headers' => [
-                    'User-Agent' => 'MyApp',
-                ],
-            ])
+        $this->httpClient->expects($this->once())
+            ->method('sendRequest')
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -271,11 +234,11 @@ class IBANClientTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClientInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
      */
     private function createHttpClientMock()
     {
-        return $this->getMockBuilder(ClientInterface::class)
+        return $this->getMockBuilder(HttpClient::class)
             ->getMock();
     }
 

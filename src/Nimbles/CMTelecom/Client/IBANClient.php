@@ -8,7 +8,8 @@
 
 namespace Nimbles\CMTelecom\Client;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
+use Http\Client\HttpClient;
 use Nimbles\CMTelecom\Exception\IBANTransactionException;
 use Nimbles\CMTelecom\Exception\IssuerConnectionException;
 use Nimbles\CMTelecom\Model\IBANTransaction;
@@ -19,7 +20,7 @@ use Nimbles\CMTelecom\Model\Issuer;
  */
 class IBANClient
 {
-    /** @var ClientInterface */
+    /** @var HttpClient */
     private $httpClient;
 
     /** @var string */
@@ -32,12 +33,12 @@ class IBANClient
     private $applicationName;
 
     /**
-     * @param ClientInterface $httpClient
+     * @param HttpClient $httpClient
      * @param string          $apiKey
      * @param string          $url
      * @param string          $applicationName
      */
-    public function __construct(ClientInterface $httpClient, string $apiKey, string $url, string $applicationName)
+    public function __construct(HttpClient $httpClient, string $apiKey, string $url, string $applicationName)
     {
         $this->httpClient             = $httpClient;
         $this->apiKey                 = $apiKey;
@@ -52,16 +53,14 @@ class IBANClient
      */
     public function getIssuers() : array
     {
-        $url = sprintf('%s/directory', rtrim($this->url, '/'));
+        $uri = sprintf('%s/directory', rtrim($this->url, '/'));
 
-        $response = $this->httpClient->request('POST', $url, [
-            'json' => [
-                'merchant_token' => $this->apiKey,
-            ],
-            'headers' => [
-                'User-Agent' => $this->applicationName,
-            ],
-        ]);
+        $request = new Request('POST', $uri, [
+            'User-Agent' => $this->applicationName,
+            'Content-Type' => 'application/json'
+        ], json_encode(['merchant_token' => $this->apiKey]));
+
+        $response = $this->httpClient->sendRequest($request);
 
         $responseData = json_decode($response->getBody()->getContents(), true);
 
@@ -88,23 +87,25 @@ class IBANClient
      */
     public function getIBANTransaction(Issuer $issuer, string $redirectUrl) : IBANTransaction
     {
-        $url = sprintf('%s/transaction', rtrim($this->url, '/'));
+        $uri = sprintf('%s/transaction', rtrim($this->url, '/'));
 
         $token = md5(time() . rand(1, 1000) . $issuer->getId() . $issuer->getName());
 
-        $response = $this->httpClient->request('POST', $url, [
-            'json' => [
-                'merchant_token'      => $this->apiKey,
-                'identity'            => true,
-                'name'                => true,
-                'issuer_id'           => $issuer->getId(),
-                'entrance_code'       => $token,
-                'merchant_return_url' => $redirectUrl,
-            ],
-            'headers' => [
-                'User-Agent' => $this->applicationName,
-            ],
-        ]);
+        $requestData = [
+            'merchant_token'      => $this->apiKey,
+            'identity'            => true,
+            'name'                => true,
+            'issuer_id'           => $issuer->getId(),
+            'entrance_code'       => $token,
+            'merchant_return_url' => $redirectUrl,
+        ];
+
+        $request = new Request('POST', $uri, [
+            'User-Agent' => $this->applicationName,
+            'Content-Type' => 'application/json'
+        ], json_encode($requestData));
+
+        $response = $this->httpClient->sendRequest($request);
 
         $responseData = json_decode($response->getBody()->getContents(), true);
 
@@ -129,18 +130,20 @@ class IBANClient
      */
     public function getTransactionInfo(IBANTransaction $IBANTransaction) : array
     {
-        $url = sprintf('%s/status', rtrim($this->url, '/'));
+        $uri = sprintf('%s/status', rtrim($this->url, '/'));
 
-        $response = $this->httpClient->request('POST', $url, [
-            'json' => [
-                'merchant_token'     => $this->apiKey,
-                'transaction_id'     => $IBANTransaction->getTransactionId(),
-                'merchant_reference' => $IBANTransaction->getMerchantReference(),
-            ],
-            'headers' => [
-                'User-Agent' => $this->applicationName,
-            ],
-        ]);
+        $requestData = [
+            'merchant_token'     => $this->apiKey,
+            'transaction_id'     => $IBANTransaction->getTransactionId(),
+            'merchant_reference' => $IBANTransaction->getMerchantReference(),
+        ];
+
+        $request = new Request('POST', $uri, [
+            'User-Agent' => $this->applicationName,
+            'Content-Type' => 'application/json'
+        ], json_encode($requestData));
+
+        $response = $this->httpClient->sendRequest($request);
 
         $responseData = json_decode($response->getBody()->getContents(), true);
 

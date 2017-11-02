@@ -26,12 +26,16 @@ This package is easy to use and can be used in any php project with php 7.0 or l
 
 ### Initializing iDIN Client
 ``` php
-$guzzle          = new \GuzzleHttp\Client();
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+
+$adapter = new GuzzleAdapter(new GuzzleClient());
+
 $apiToken        = 'secret-token';
 $apiUrl          = 'https://idin.cmtelecom.com/idin/v1.0/test';
 $applicationName = 'MyApp';
 
-$client = new IDINClient($guzzle, $apiToken, $apiUrl, $applicationName);
+$client = new IDINClient($adapter, $apiToken, $apiUrl, $applicationName);
 ```
 
 ### Get a list of issuers
@@ -68,12 +72,16 @@ You can also receive bank account details with the IBANClient. It works almost t
 
 ### Initializing IBAN Client
 ``` php
-$guzzle          = new \GuzzleHttp\Client();
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+
+$adapter = new GuzzleAdapter(new GuzzleClient());
+
 $apiToken        = 'secret-token';
 $apiUrl          = 'https://ibancheck.cmdisp.com/ibancheck/v1.0/test';
 $applicationName = 'MyApp';
 
-$client = new IBANClient($guzzle, $apiToken, $apiUrl, $applicationName);
+$client = new IBANClient($adapter, $apiToken, $apiUrl, $applicationName);
 ```
 
 ### Get a list of issuers
