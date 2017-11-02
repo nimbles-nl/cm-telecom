@@ -58,7 +58,7 @@ class IDINClientTest extends TestCase
                     'merchant_token' => 'secret-token',
                 ],
                 'headers' => [
-                    'user_agent' => 'MyApp',
+                    'User-Agent' => 'MyApp',
                 ],
             ])
         ->willReturn($this->response);
@@ -89,7 +89,7 @@ class IDINClientTest extends TestCase
                     'merchant_token' => 'secret-token',
                 ],
                 'headers' => [
-                    'user_agent' => 'MyApp',
+                    'User-Agent' => 'MyApp',
                 ],
             ])
             ->willReturn($this->response);
@@ -119,7 +119,7 @@ class IDINClientTest extends TestCase
                     'merchant_token' => 'secret-token',
                 ],
                 'headers' => [
-                    'user_agent' => 'MyApp',
+                    'User-Agent' => 'MyApp',
                 ],
             ])
             ->willReturn($this->response);
@@ -210,7 +210,7 @@ class IDINClientTest extends TestCase
                     'merchant_reference' => 'transaction-reference',
                 ],
                 'headers' => [
-                    'user_agent' => 'MyApp',
+                    'User-Agent' => 'MyApp',
                 ],
             ])
             ->willReturn($this->response);
@@ -251,7 +251,7 @@ class IDINClientTest extends TestCase
                     'merchant_reference' => 'transaction-reference',
                 ],
                 'headers' => [
-                    'user_agent' => 'MyApp',
+                    'User-Agent' => 'MyApp',
                 ],
             ])
             ->willReturn($this->response);

@@ -60,7 +60,7 @@ class IDINClient
                 'merchant_token' => $this->apiKey,
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 
@@ -110,7 +110,7 @@ class IDINClient
                 'language'            => 'nl',
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 
@@ -146,7 +146,7 @@ class IDINClient
                 'merchant_reference' => $IDINTransaction->getMerchantReference(),
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 

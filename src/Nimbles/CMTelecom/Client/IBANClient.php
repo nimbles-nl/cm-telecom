@@ -59,7 +59,7 @@ class IBANClient
                 'merchant_token' => $this->apiKey,
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 
@@ -102,7 +102,7 @@ class IBANClient
                 'merchant_return_url' => $redirectUrl,
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 
@@ -138,7 +138,7 @@ class IBANClient
                 'merchant_reference' => $IBANTransaction->getMerchantReference(),
             ],
             'headers' => [
-                'user_agent' => $this->applicationName,
+                'User-Agent' => $this->applicationName,
             ],
         ]);
 
