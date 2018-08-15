@@ -69,11 +69,11 @@ class IDINClient
             throw new IssuerConnectionException($responseData);
         }
 
-        if ( ! isset($responseData[0]['issuers'])) {
+        if (! isset($responseData[0]['issuers'])) {
             throw new IssuerConnectionException('Unable to parse issuers');
         }
 
-        return array_map(function($issuerData) {
+        return array_map(function ($issuerData) {
             return new Issuer($issuerData['issuer_id'], $issuerData['issuer_name']);
         }, $responseData[0]['issuers']);
     }
@@ -86,27 +86,37 @@ class IDINClient
      *
      * @throws IDINTransactionException
      */
-    public function getIDINTransaction(Issuer $issuer, string $redirectUrl) : IDINTransaction
+    public function getIDINTransaction(Issuer $issuer, string $redirectUrl, array $scopes = []) : IDINTransaction
     {
         $uri = sprintf('%s/transaction', rtrim($this->url, '/'));
 
         $token = md5(time() . rand(1, 1000) . $issuer->getId() . $issuer->getName());
 
-        $requestData = [
+        $options = [
+            'identity'         => true,
+            'name'             => true,
+            'gender'           => true,
+            'address'          => true,
+            'date_of_birth'    => true,
+            '18y_or_older'     => true,
+            'email_address'    => false,
+            'telephone_number' => false,
+        ];
+
+        if (!empty($scopes)) {
+            $options = array_merge(
+                array_fill_keys(array_keys($options), false),
+                array_fill_keys($scopes, true)
+            );
+        }
+
+        $requestData = array_merge($options, [
             'merchant_token'      => $this->apiKey,
-            'identity'            => true,
-            'name'                => true,
-            'gender'              => true,
-            'address'             => true,
-            'date_of_birth'       => true,
-            '18y_or_older'        => true,
-            'email_address'       => false,
-            'telephone_number'    => false,
             'issuer_id'           => $issuer->getId(),
             'entrance_code'       => $token,
             'merchant_return_url' => $redirectUrl,
             'language'            => 'nl',
-        ];
+        ]);
 
         $request = new Request('POST', $uri, [
             'User-Agent' => $this->applicationName,
